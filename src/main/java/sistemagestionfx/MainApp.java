@@ -1,9 +1,15 @@
 package sistemagestionfx;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
@@ -16,93 +22,124 @@ public class MainApp extends Application {
         BorderPane root = new BorderPane();
 
         workspace = new StackPane();
-
         workspace.setStyle("-fx-background-color: #f4f4f4;");
 
-        // ===== MENU BAR =====
+        // ===== MENÚ LATERAL =====
 
-        MenuBar menuBar = new MenuBar();
+        VBox menuLateral = new VBox(15);
 
-        // ===== CLIENTE =====
+        menuLateral.setPadding(new Insets(20));
+        menuLateral.setPrefWidth(220);
 
-        Menu menuCliente = new Menu("Cliente");
+        menuLateral.setStyle(
+    "-fx-background-color: #1e272e;"
+);
 
-        MenuItem itemCliente =
-                new MenuItem("Gestionar Cliente");
+        Button btnInicio =
+        new Button("🏠 Inicio");
+        
+        Button btnClientes =
+                new Button("Clientes");
 
-        itemCliente.setOnAction(
+        Button btnProveedores =
+                new Button("Proveedores");
+
+        Button btnVentas =
+                new Button("Ventas");
+
+        Button btnFinanzas =
+                new Button("Finanzas");
+
+        Button btnSalir =
+                new Button("Salir");
+
+        // Tamaño botones
+        
+        btnInicio.setMaxWidth(Double.MAX_VALUE);
+        btnClientes.setMaxWidth(Double.MAX_VALUE);
+        btnProveedores.setMaxWidth(Double.MAX_VALUE);
+        btnVentas.setMaxWidth(Double.MAX_VALUE);
+        btnFinanzas.setMaxWidth(Double.MAX_VALUE);
+        btnSalir.setMaxWidth(Double.MAX_VALUE);
+
+        // Estilo botones
+
+        String estiloBoton =
+    "-fx-background-color:#34495e;"
+    + "-fx-text-fill:white;"
+    + "-fx-font-size:14px;"
+    + "-fx-pref-height:45px;"
+    + "-fx-background-radius:8;";
+       
+        btnInicio.setStyle(estiloBoton);
+        btnClientes.setStyle(estiloBoton);
+        btnProveedores.setStyle(estiloBoton);
+        btnVentas.setStyle(estiloBoton);
+        btnFinanzas.setStyle(estiloBoton);
+        btnSalir.setStyle(estiloBoton);
+
+        menuLateral.getChildren().addAll(
+                btnInicio,
+                btnClientes,
+                btnProveedores,
+                btnVentas,
+                btnFinanzas,
+                btnSalir
+        );
+
+        // ===== EVENTOS =====
+        
+btnInicio.setOnAction(
+        e -> mostrarInicio()
+);
+        btnClientes.setOnAction(
                 e -> abrirFormularioCliente()
         );
 
-        menuCliente.getItems().add(itemCliente);
-
-        // ===== PROVEEDOR =====
-
-        Menu menuProveedor = new Menu("Proveedor");
-
-        MenuItem itemProveedor =
-                new MenuItem("Gestionar Proveedor");
-
-        itemProveedor.setOnAction(
+        btnProveedores.setOnAction(
                 e -> abrirFormularioProveedor()
         );
 
-        menuProveedor.getItems().add(itemProveedor);
-
-        // ===== VENTAS =====
-
-        Menu menuVentas = new Menu("Ventas");
-
-        MenuItem itemVentas =
-                new MenuItem("Gestionar Ventas");
-
-        itemVentas.setOnAction(
+        btnVentas.setOnAction(
                 e -> abrirFormularioVentas()
         );
 
-        menuVentas.getItems().add(itemVentas);
-
-        // ===== FINANZAS =====
-
-        Menu menuFinanzas = new Menu("Finanzas");
-
-        MenuItem itemFinanzas =
-                new MenuItem("Ver Reporte");
-
-        itemFinanzas.setOnAction(
+        btnFinanzas.setOnAction(
                 e -> abrirFormularioFinanzas()
         );
 
-        menuFinanzas.getItems().add(itemFinanzas);
-
-        // ===== SALIR =====
-
-        Menu menuSalir = new Menu("Salir");
-
-        MenuItem itemSalir =
-                new MenuItem("Cerrar Aplicación");
-
-        itemSalir.setOnAction(
+        btnSalir.setOnAction(
                 e -> System.exit(0)
         );
 
-        menuSalir.getItems().add(itemSalir);
+        // ===== LAYOUT =====
+HBox header = new HBox();
 
-        // ===== AGREGAR MENUS =====
+header.setStyle(
+    "-fx-background-color: #1e272e;"
+);
 
-        menuBar.getMenus().addAll(
-                menuCliente,
-                menuProveedor,
-                menuVentas,
-                menuFinanzas,
-                menuSalir
-        );
+header.setPrefHeight(70);
 
-        root.setTop(menuBar);
+Label tituloSistema =
+        new Label("LICORERÍA");
 
+tituloSistema.setStyle(
+    "-fx-text-fill: white;"
+    + "-fx-font-size: 28px;"
+    + "-fx-font-weight: bold;"
+);
+
+header.getChildren().add(tituloSistema);
+
+header.setAlignment(javafx.geometry.Pos.CENTER);
+
+root.setTop(header);
+        root.setLeft(menuLateral);
         root.setCenter(workspace);
 
-        Scene scene = new Scene(root, 1000, 700);
+        Scene scene =
+                new Scene(root, 1200, 700);
 
         primaryStage.setTitle(
                 "Sistema de Gestión de Licorería"
@@ -122,12 +159,12 @@ public class MainApp extends Application {
             alert.setHeaderText(null);
 
             alert.setContentText(
-                    "Debe salir desde el menú Salir."
+                    "Debe salir desde el botón Salir."
             );
 
             alert.showAndWait();
         });
-
+mostrarInicio();
         primaryStage.show();
     }
 
@@ -154,6 +191,135 @@ public class MainApp extends Application {
 
         workspace.getChildren().add(form);
     }
+    private void mostrarInicio() {
+
+    workspace.getChildren().clear();
+
+    VBox contenedor = new VBox(30);
+
+    contenedor.setAlignment(
+            javafx.geometry.Pos.CENTER
+    );
+
+    Label bienvenida =
+            new Label(
+                    "Bienvenido al Sistema"
+            );
+
+    bienvenida.setStyle(
+            "-fx-font-size: 24px;"
+            + "-fx-font-weight: bold;"
+    );
+
+    HBox filaProductos =
+            new HBox(25);
+
+    filaProductos.setAlignment(
+            javafx.geometry.Pos.CENTER
+    );
+
+    filaProductos.getChildren().addAll(
+
+            crearCardProducto(
+                    "Aguila",
+                    "$4.000",
+                    "00023",
+                    "/sistemagestionfx/images/aguila.png"
+            ),
+
+            crearCardProducto(
+                    "Vino",
+                    "$35.000",
+                    "00549",
+                    "/sistemagestionfx/images/vino.png"
+            ),
+
+            crearCardProducto(
+                    "Old Parr",
+                    "$120.000",
+                    "00590",
+                    "/sistemagestionfx/images/oldparr.png"
+            ),
+
+            crearCardProducto(
+                    "Ron Medellín",
+                    "$80.000",
+                    "00567",
+                    "/sistemagestionfx/images/ron.png"
+            )
+    );
+
+    contenedor.getChildren().addAll(
+            bienvenida,
+            filaProductos
+    );
+
+    workspace.getChildren().add(contenedor);
+}
+    private VBox crearCardProducto(
+        String nombre,
+        String precio,
+        String codigo,
+        String rutaImagen) {
+        Button btnComprar = new Button("Comprar");
+
+btnComprar.setOnAction(e -> {
+    abrirFormularioVentas();
+});
+
+    VBox card = new VBox(10);
+
+    card.setAlignment(
+            javafx.geometry.Pos.CENTER
+    );
+
+    card.setPrefSize(180, 250);
+
+    card.setStyle(
+            "-fx-background-color:white;"
+            + "-fx-background-radius:15;"
+            + "-fx-border-radius:15;"
+            + "-fx-border-color:#dfe6e9;"
+            + "-fx-padding:15;"
+    );
+
+    javafx.scene.image.ImageView imagen =
+            new javafx.scene.image.ImageView(
+                    new javafx.scene.image.Image(
+                            getClass()
+                                    .getResourceAsStream(
+                                            rutaImagen
+                                    )
+                    )
+            );
+
+    imagen.setFitWidth(100);
+    imagen.setFitHeight(130);
+//Label imagen = new Label("SIN IMAGEN");
+
+    Label lblNombre =
+            new Label(nombre);
+
+    lblNombre.setStyle(
+            "-fx-font-size:16px;"
+            + "-fx-font-weight:bold;"
+    );
+    Label lblCodigo =
+            new Label(codigo);
+
+    Label lblPrecio =
+            new Label(precio);
+
+    card.getChildren().addAll(
+            imagen,
+            lblNombre,
+            lblCodigo,
+            lblPrecio,
+            btnComprar
+    );
+
+    return card;
+}
 
     // ===== VENTAS =====
 

@@ -1,0 +1,97 @@
+/* Fondo general de formularios */
+.form-container {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #dcdde1;
+    -fx-padding: 25;
+}
+
+/* Títulos */
+.label-titulo {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+/* Campos de texto */
+.text-field {
+    -fx-pref-width: 220;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #bdc3c7;
+    -fx-padding: 8;
+}
+
+/* Botones principales */
+.btn-entrar {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-entrar:hover {
+    -fx-background-color: #219150;
+}
+
+/* Botones de salir o eliminar */
+.btn-salir {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-salir:hover {
+    -fx-background-color: #c0392b;
+}
+
+/* Menú lateral */
+.menu-lateral {
+    -fx-background-color: #1e272e;
+}
+
+/* Botones del menú lateral */
+.menu-button {
+    -fx-background-color: #34495e;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-pref-height: 45px;
+    -fx-cursor: hand;
+}
+
+.menu-button:hover {
+    -fx-background-color: #4a6785;
+}
+
+/* Barra superior */
+.header {
+    -fx-background-color: #1e272e;
+}
+
+/* Tarjetas de productos */
+.card-producto {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #dfe6e9;
+    -fx-padding: 15;
+}
+
+/* Nombre del producto */
+.nombre-producto {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* Precio del producto */
+.precio-producto {
+    -fx-font-size: 14px;
+    -fx-text-fill: #27ae60;
+    -fx-font-weight: bold;
+}
