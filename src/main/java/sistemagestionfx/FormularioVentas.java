@@ -1,5 +1,6 @@
 package sistemagestionfx;
 
+import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -22,7 +23,7 @@ public class FormularioVentas extends VBox {
         this.setAlignment(Pos.CENTER);
         this.setMaxSize(500, 400);
 
-        Label titulo = new Label("GESTIÓN DE VENTAS");
+        Label titulo = new Label("VENTAS");
 
         titulo.setStyle(
                 "-fx-font-size:20px; -fx-font-weight:bold;"
@@ -56,6 +57,7 @@ public class FormularioVentas extends VBox {
         grid.add(txtValor, 1, 2);
 
         Button btnGuardar = new Button("Guardar");
+        Button btnMostrar = new Button("Mostrar Ventas");
         Button btnBuscar = new Button("Buscar");
         Button btnActualizar = new Button("Actualizar");
         Button btnEliminar = new Button("Eliminar");
@@ -63,6 +65,7 @@ public class FormularioVentas extends VBox {
         Button btnSalir = new Button("Salir");
 
         btnGuardar.getStyleClass().add("btn-entrar");
+        btnMostrar.getStyleClass().add("btn-entrar");
         btnActualizar.getStyleClass().add("btn-entrar");
 
         btnEliminar.getStyleClass().add("btn-salir");
@@ -126,6 +129,28 @@ public class FormularioVentas extends VBox {
                 );
             }
         });
+        btnMostrar.setOnAction(e -> {
+
+    List<Venta> ventas = dao.leerVentas();
+
+    StringBuilder texto = new StringBuilder();
+
+    for (Venta v : ventas) {
+        texto.append("Código: ")
+             .append(v.getCodigo())
+             .append("\nProducto: ")
+             .append(v.getProducto())
+             .append("\nValor: ")
+             .append(v.getValor())
+             .append("\n\n");
+    }
+
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("Ventas Registradas");
+    alert.setHeaderText(null);
+    alert.setContentText(texto.toString());
+    alert.showAndWait();
+});
 
         btnBuscar.setOnAction(e -> {
 
@@ -245,6 +270,7 @@ public class FormularioVentas extends VBox {
         HBox fila1 = new HBox(
                 10,
                 btnGuardar,
+                btnMostrar,
                 btnBuscar,
                 btnActualizar
         );

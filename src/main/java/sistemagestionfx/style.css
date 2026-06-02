@@ -1,4 +1,7 @@
 /* Fondo general de formularios */
+.menu-button:hover {
+    -fx-background-color: #4f46e5;
+}
 .form-container {
     -fx-background-color: white;
     -fx-background-radius: 15;

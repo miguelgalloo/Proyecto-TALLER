@@ -8,23 +8,23 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VentaDAO {
+public class ProductoDAO {
 
-    private static final String ARCHIVO = "ventas.json";
+    private static final String ARCHIVO = "productos.json";
 
     private Gson gson = new Gson();
 
-    public List<Venta> leerVentas() {
+    public List<Producto> leerProductos() {
 
         try {
 
             Type tipoLista =
-                    new TypeToken<List<Venta>>() {}.getType();
+                    new TypeToken<List<Producto>>() {}.getType();
 
             FileReader reader =
                     new FileReader(ARCHIVO);
 
-            List<Venta> lista =
+            List<Producto> lista =
                     gson.fromJson(reader, tipoLista);
 
             reader.close();
@@ -39,7 +39,7 @@ public class VentaDAO {
         }
     }
 
-    public void guardarVentas(List<Venta> ventas) {
+    public void guardarProductos(List<Producto> ventas) {
 
         try {
 
@@ -56,42 +56,42 @@ public class VentaDAO {
         }
     }
 
-    public void agregarVenta(Venta venta) {
+    public void agregarProducto(Producto Producto) {
 
-        List<Venta> lista =
-                leerVentas();
+        List<Producto> lista =
+                leerProductos();
 
-        lista.add(venta);
+        lista.add(Producto);
 
-        guardarVentas(lista);
+        guardarProductos(lista);
     }
     
-    public Venta buscarVenta(String codigo) {
+    public Producto buscarProducto(String codigo) {
 
-    List<Venta> lista = leerVentas();
+    List<Producto> lista = leerProductos();
 
-    for (Venta v : lista) {
+    for (Producto p : lista) {
 
-        if (v.getCodigo().equals(codigo)) {
-            return v;
+        if (p.getCodigo().equals(codigo)) {
+            return p;
         }
     }
 
     return null;
 }
 
-public boolean actualizarVenta(Venta ventaActualizada) {
+public boolean actualizarProducto(Producto productoActualizada) {
 
-    List<Venta> lista = leerVentas();
+    List<Producto> lista = leerProductos();
 
     for (int i = 0; i < lista.size(); i++) {
 
         if (lista.get(i).getCodigo()
-                .equals(ventaActualizada.getCodigo())) {
+                .equals(productoActualizada.getCodigo())) {
 
-            lista.set(i, ventaActualizada);
+            lista.set(i, productoActualizada);
 
-            guardarVentas(lista);
+            guardarProductos(lista);
 
             return true;
         }
@@ -99,13 +99,13 @@ public boolean actualizarVenta(Venta ventaActualizada) {
 
     return false;
 }
-public List<Venta> obtenerTodasLasVentas() {
-    return leerVentas();
+public List<Producto> obtenerTodasLosProductos() {
+    return leerProductos();
 }
 
-public boolean eliminarVenta(String codigo) {
+public boolean eliminarProducto(String codigo) {
 
-    List<Venta> lista = leerVentas();
+    List<Producto> lista = leerProductos();
 
     boolean eliminado = lista.removeIf(
             v -> v.getCodigo().equals(codigo)
@@ -113,7 +113,7 @@ public boolean eliminarVenta(String codigo) {
 
     if (eliminado) {
 
-        guardarVentas(lista);
+        guardarProductos(lista);
     }
 
     return eliminado;

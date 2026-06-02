@@ -6,8 +6,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -32,26 +35,48 @@ public class MainApp extends Application {
         menuLateral.setPrefWidth(220);
 
         menuLateral.setStyle(
-    "-fx-background-color: #1e272e;"
+    "-fx-background-color: linear-gradient(to bottom, #0f172a, #1e293b);"
+
+);Label logo = new Label("🍸 LICORERÍA");
+logo.setStyle(
+    "-fx-text-fill:white;"
+    + "-fx-font-size:26px;"
+    + "-fx-font-weight:bold;"
 );
+
+Label subtitulo = new Label("Sistema de Gestión");
+subtitulo.setStyle(
+    "-fx-text-fill:#cbd5e1;"
+    + "-fx-font-size:12px;"
+);
+
+VBox encabezadoMenu = new VBox(
+        5,
+        logo,
+        subtitulo
+);
+
+
 
         Button btnInicio =
         new Button("🏠 Inicio");
         
         Button btnClientes =
-                new Button("Clientes");
+                new Button("👥 Clientes");
 
         Button btnProveedores =
-                new Button("Proveedores");
+                new Button("🚚 Proveedores");
 
         Button btnVentas =
-                new Button("Ventas");
+                new Button("🛒 Ventas");
+        Button btnProductos = 
+                new Button("📦 Productos");
 
         Button btnFinanzas =
-                new Button("Finanzas");
+                new Button("💰 Finanzas");
 
         Button btnSalir =
-                new Button("Salir");
+                new Button("⏻ Salir");
 
         // Tamaño botones
         
@@ -60,32 +85,57 @@ public class MainApp extends Application {
         btnProveedores.setMaxWidth(Double.MAX_VALUE);
         btnVentas.setMaxWidth(Double.MAX_VALUE);
         btnFinanzas.setMaxWidth(Double.MAX_VALUE);
+        btnProductos.setMaxWidth(Double.MAX_VALUE);
         btnSalir.setMaxWidth(Double.MAX_VALUE);
 
         // Estilo botones
 
         String estiloBoton =
-    "-fx-background-color:#34495e;"
-    + "-fx-text-fill:white;"
-    + "-fx-font-size:14px;"
-    + "-fx-pref-height:45px;"
-    + "-fx-background-radius:8;";
+"-fx-background-color: transparent;"
++ "-fx-text-fill: white;"
++ "-fx-font-size:15px;"
++ "-fx-font-weight:bold;"
++ "-fx-alignment:CENTER_LEFT;"
++ "-fx-padding:15 20 15 20;"
++ "-fx-background-radius:12;";
        
         btnInicio.setStyle(estiloBoton);
+        
         btnClientes.setStyle(estiloBoton);
         btnProveedores.setStyle(estiloBoton);
         btnVentas.setStyle(estiloBoton);
         btnFinanzas.setStyle(estiloBoton);
-        btnSalir.setStyle(estiloBoton);
+        btnProductos.setStyle(estiloBoton);
+        btnSalir.setStyle("-fx-background-color: transparent;"
+        + "-fx-text-fill:#ef4444;"
+        + "-fx-font-size:15px;"
+        + "-fx-font-weight:bold;"
+        + "-fx-alignment:CENTER_LEFT;"
+        + "-fx-padding:15;"
+);
 
-        menuLateral.getChildren().addAll(
-                btnInicio,
-                btnClientes,
-                btnProveedores,
-                btnVentas,
-                btnFinanzas,
-                btnSalir
-        );
+        VBox menuSuperior = new VBox(15);
+
+menuSuperior.getChildren().addAll(
+        btnInicio,
+        btnClientes,
+        btnProveedores,
+        btnProductos,
+        btnVentas,
+        btnFinanzas
+);
+        Region espacio = new Region();
+
+VBox.setVgrow(
+        espacio,
+        javafx.scene.layout.Priority.ALWAYS
+);
+menuLateral.getChildren().addAll(
+        encabezadoMenu,
+        menuSuperior,
+        espacio,
+        btnSalir
+);
 
         // ===== EVENTOS =====
         
@@ -107,19 +157,24 @@ btnInicio.setOnAction(
         btnFinanzas.setOnAction(
                 e -> abrirFormularioFinanzas()
         );
+       btnProductos.setOnAction(
+        e -> mostrarProductos()
+);
 
         btnSalir.setOnAction(
                 e -> System.exit(0)
         );
 
-        // ===== LAYOUT =====
+//        // ===== LAYOUT =====
 HBox header = new HBox();
 
 header.setStyle(
-    "-fx-background-color: #1e272e;"
+    "-fx-background-color: white;"
+    + "-fx-border-color:#e5e7eb;"
+    + "-fx-border-width:0 0 1 0;"
 );
 
-header.setPrefHeight(70);
+
 
 Label tituloSistema =
         new Label("LICORERÍA");
@@ -276,12 +331,13 @@ btnComprar.setOnAction(e -> {
     card.setPrefSize(180, 250);
 
     card.setStyle(
-            "-fx-background-color:white;"
-            + "-fx-background-radius:15;"
-            + "-fx-border-radius:15;"
-            + "-fx-border-color:#dfe6e9;"
-            + "-fx-padding:15;"
-    );
+    "-fx-background-color:white;"
+    + "-fx-background-radius:20;"
+    + "-fx-border-radius:20;"
+    + "-fx-border-color:#e2e8f0;"
+    + "-fx-effect:dropshadow(gaussian,"
+    + "rgba(0,0,0,0.08),15,0,0,4);"
+);
 
     javafx.scene.image.ImageView imagen =
             new javafx.scene.image.ImageView(
@@ -319,6 +375,88 @@ btnComprar.setOnAction(e -> {
     );
 
     return card;
+}
+private void mostrarProductos() {
+
+    workspace.getChildren().clear();
+
+    BorderPane panelPrincipal =
+            new BorderPane();
+
+    Label titulo =
+            new Label("PRODUCTOS");
+
+    titulo.setStyle(
+            "-fx-font-size:24px;"
+            + "-fx-font-weight:bold;"
+    );
+
+    FlowPane panelProductos =
+            new FlowPane();
+
+    panelProductos.setHgap(25);
+    panelProductos.setVgap(25);
+    panelProductos.setPadding(
+            new Insets(20)
+    );
+
+    panelProductos.setAlignment(
+            javafx.geometry.Pos.CENTER
+    );
+
+    ProductoDAO dao =
+            new ProductoDAO();
+
+    for (Producto p : dao.leerProductos()) {
+
+        panelProductos.getChildren().add(
+
+                crearCardProducto(
+                        p.getNombre(),
+                        "$" + p.getPrecio(),
+                        p.getCodigo(),
+                        p.getImagen()
+                )
+        );
+    }
+
+    ScrollPane scroll =
+            new ScrollPane(panelProductos);
+
+    scroll.setFitToWidth(true);
+
+    VBox centro =
+            new VBox(20);
+
+    centro.setAlignment(
+            javafx.geometry.Pos.TOP_CENTER
+    );
+
+    centro.getChildren().addAll(
+            titulo,
+            scroll
+    );
+
+    Button btnAdministrar =
+            new Button(
+                    "Administrar Productos"
+            );
+btnAdministrar.setStyle(
+    "-fx-background-color:#4f46e5;"
+    + "-fx-text-fill:white;"
+    + "-fx-font-size:15px;"
+    + "-fx-font-weight:bold;"
+    + "-fx-background-radius:15;"
+    + "-fx-padding:12 20 12 20;"
+);
+    btnAdministrar.setPrefWidth(180);
+
+    panelPrincipal.setCenter(centro);
+    panelPrincipal.setRight(btnAdministrar);
+
+    workspace.getChildren().add(
+            panelPrincipal
+    );
 }
 
     // ===== VENTAS =====
