@@ -18,7 +18,7 @@ public class FormularioVentas extends VBox {
     public FormularioVentas(StackPane parent) {
 
         this.getStylesheets().add(
-                getClass().getResource("style.css").toExternalForm()
+                getClass().getResource("/sistemagestionfx/style.css").toExternalForm()
         );
 
         this.getStyleClass().add("form-container");

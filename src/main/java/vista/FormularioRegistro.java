@@ -158,8 +158,8 @@ public class FormularioRegistro extends VBox {
                 new ComboBox<>();
 
         cmbRol.getItems().addAll(
-                "cliente",
-                "administrador"
+                "CLIENTE",
+                "ADMIN"
         );
 
         cmbRol.setPromptText(
@@ -170,10 +170,7 @@ public class FormularioRegistro extends VBox {
                 "login-field"
         );
 
-        // ======================
-        // BOTÓN REGISTRAR
-        // ======================
-
+     
         Button btnRegistrar =
                 new Button("REGISTRAR");
 
@@ -181,21 +178,56 @@ public class FormularioRegistro extends VBox {
                 "login-button"
         );
 
-        btnRegistrar.setOnAction(e -> {
+       btnRegistrar.setOnAction(e -> {
 
-            Alert alert =
-                    new Alert(
-                            Alert.AlertType.INFORMATION
-                    );
+    if (txtUsuario.getText().isEmpty()
+            || txtClave.getText().isEmpty()
+            || cmbRol.getValue() == null) {
 
-            alert.setHeaderText(null);
+        Alert alert =
+                new Alert(Alert.AlertType.WARNING);
 
-            alert.setContentText(
-                    "Usuario registrado correctamente"
-            );
+        alert.setHeaderText(null);
 
-            alert.showAndWait();
-        });
+        alert.setContentText(
+                "Complete todos los campos"
+        );
+
+        alert.showAndWait();
+
+        return;
+    }
+
+    Usuario usuario = new Usuario();
+
+    usuario.setUsuario(
+            txtUsuario.getText()
+    );
+
+    usuario.setClave(
+            txtClave.getText()
+    );
+
+    usuario.setRol(
+            cmbRol.getValue()
+    );
+
+    UsuarioDAO dao =
+            new UsuarioDAO();
+
+    dao.guardarUsuario(usuario);
+
+    Alert alert =
+            new Alert(Alert.AlertType.INFORMATION);
+
+    alert.setHeaderText(null);
+
+    alert.setContentText(
+            "Usuario registrado correctamente"
+    );
+
+    alert.showAndWait();
+});
 
         // ======================
         // VOLVER AL LOGIN

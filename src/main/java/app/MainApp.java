@@ -7,24 +7,26 @@ import modelo.Producto;
 import vista.FormularioCliente;
 import vista.FormularioFinanzas;
 import vista.FormularioLogin;
+
 import vista.FormularioProductos;
 import vista.FormularioProveedor;
 import vista.FormularioRegistro;
 import vista.FormularioVentas;
 import dao.ProductoDAO;
-
-
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -36,8 +38,16 @@ public class MainApp extends Application {
     private StackPane workspace;
 
     private VBox menuLateral;
+    private Label nombreUsuario;
 
     private Usuario usuarioActual;
+    private Button btnInicio;
+    private Button btnClientes;
+    private Button btnProveedores;
+    private Button btnProductos;
+    private Button btnVentas;
+    private Button btnFinanzas;
+    private Button btnSalir;
 
     
 
@@ -47,7 +57,7 @@ public class MainApp extends Application {
         root = new BorderPane();
 
         workspace = new StackPane();
-        workspace.setStyle("-fx-background-color: #f4f4f4;");
+        workspace.getStyleClass().add("workspace");
 
         // ===== MENÚ LATERAL =====
 
@@ -56,48 +66,55 @@ public class MainApp extends Application {
         menuLateral.setPadding(new Insets(20));
         menuLateral.setPrefWidth(220);
 
-        menuLateral.setStyle(
-    "-fx-background-color: linear-gradient(to bottom, #0f172a, #1e293b);"
-
-);Label logo = new Label("🍸 LICORERÍA");
-logo.setStyle(
-    "-fx-text-fill:white;"
-    + "-fx-font-size:26px;"
-    + "-fx-font-weight:bold;"
+        menuLateral.getStyleClass().add("menu-lateral");
+       ImageView logoImg = new ImageView(
+        new Image("/sistemagestionfx/images/logo.png")
 );
+
+logoImg.setFitWidth(40);
+logoImg.setFitHeight(40);
+
+Label logo = new Label("LICORERÍA");
+
+logo.getStyleClass().add("logo-menu");
+
+HBox encabezadoLogo = new HBox(
+        10,
+        logoImg,
+        logo
+);
+
+encabezadoLogo.setAlignment(Pos.CENTER_LEFT);
 
 Label subtitulo = new Label("Sistema de Gestión");
-subtitulo.setStyle(
-    "-fx-text-fill:#cbd5e1;"
-    + "-fx-font-size:12px;"
-);
+subtitulo.getStyleClass().add("subtitulo-menu");
 
 VBox encabezadoMenu = new VBox(
         5,
-        logo,
+        encabezadoLogo,
         subtitulo
 );
 
 
 
-        Button btnInicio =
+        btnInicio =
         new Button("🏠 Inicio");
         
-        Button btnClientes =
+        btnClientes =
                 new Button("👥 Clientes");
 
-        Button btnProveedores =
+        btnProveedores =
                 new Button("🚚 Proveedores");
 
-        Button btnVentas =
+        btnVentas =
                 new Button("🛒 Ventas");
-        Button btnProductos = 
+        btnProductos = 
                 new Button("📦 Productos");
 
-        Button btnFinanzas =
+        btnFinanzas =
                 new Button("💰 Finanzas");
 
-        Button btnSalir =
+        btnSalir =
                 new Button("⏻ Salir");
 
         // Tamaño botones
@@ -110,31 +127,16 @@ VBox encabezadoMenu = new VBox(
         btnProductos.setMaxWidth(Double.MAX_VALUE);
         btnSalir.setMaxWidth(Double.MAX_VALUE);
 
-        // Estilo botones
 
-        String estiloBoton =
-"-fx-background-color: transparent;"
-+ "-fx-text-fill: white;"
-+ "-fx-font-size:15px;"
-+ "-fx-font-weight:bold;"
-+ "-fx-alignment:CENTER_LEFT;"
-+ "-fx-padding:15 20 15 20;"
-+ "-fx-background-radius:12;";
        
-        btnInicio.setStyle(estiloBoton);
+        btnInicio.getStyleClass().add("menu-btn");
         
-        btnClientes.setStyle(estiloBoton);
-        btnProveedores.setStyle(estiloBoton);
-        btnVentas.setStyle(estiloBoton);
-        btnFinanzas.setStyle(estiloBoton);
-        btnProductos.setStyle(estiloBoton);
-        btnSalir.setStyle("-fx-background-color: transparent;"
-        + "-fx-text-fill:#ef4444;"
-        + "-fx-font-size:15px;"
-        + "-fx-font-weight:bold;"
-        + "-fx-alignment:CENTER_LEFT;"
-        + "-fx-padding:15;"
-);
+        btnClientes.getStyleClass().add("menu-btn");
+        btnProveedores.getStyleClass().add("menu-btn");
+        btnVentas.getStyleClass().add("menu-btn");
+        btnFinanzas.getStyleClass().add("menu-btn");
+        btnProductos.getStyleClass().add("menu-btn");
+        btnSalir.getStyleClass().add("btn-salir");
 
         VBox menuSuperior = new VBox(15);
 
@@ -188,26 +190,55 @@ btnInicio.setOnAction(
         );
 
 //        // ===== LAYOUT =====
+
 HBox header = new HBox();
 
-header.setStyle(
-    "-fx-background-color: white;"
-    + "-fx-border-color:#e5e7eb;"
-    + "-fx-border-width:0 0 1 0;"
-);
+header.setPadding(new Insets(15,25,15,25));
 
+header.setAlignment(Pos.CENTER_RIGHT);
 
+header.setSpacing(15);
+
+header.getStyleClass().add("header");
+
+Label iconoUsuario =
+        new Label("👤");
+
+iconoUsuario.getStyleClass()
+        .add("icono-usuario");
+nombreUsuario = new Label("Invitado");
+
+nombreUsuario.getStyleClass()
+        .add("nombre-usuario");
+nombreUsuario.getStyleClass()
+        .add("nombre-usuario");
+
+HBox usuarioBox =
+        new HBox(
+            10,
+            iconoUsuario,
+            nombreUsuario
+        );
+
+usuarioBox.setAlignment(Pos.CENTER);
 
 Label tituloSistema =
         new Label("LICORERÍA");
 
-tituloSistema.setStyle(
-    "-fx-text-fill: white;"
-    + "-fx-font-size: 28px;"
-    + "-fx-font-weight: bold;"
+tituloSistema.getStyleClass().add("titulo-sistema");
+
+Region espacioHeader = new Region();
+
+HBox.setHgrow(
+        espacioHeader,
+        Priority.ALWAYS
 );
 
-header.getChildren().add(tituloSistema);
+header.getChildren().addAll(
+        tituloSistema,
+        espacioHeader,
+        usuarioBox
+);
 
 header.setAlignment(javafx.geometry.Pos.CENTER);
 
@@ -217,6 +248,11 @@ root.setTop(header);
 
         Scene scene =
                 new Scene(root, 1200, 700);
+        scene.getStylesheets().add(
+        getClass()
+                .getResource("/sistemagestionfx/inicio.css")
+                .toExternalForm()
+);
 
         primaryStage.setTitle(
                 "Sistema de Gestión de Licorería"
@@ -286,10 +322,7 @@ root.setTop(header);
                     "Productos mas vendidos"
             );
 
-    bienvenida.setStyle(
-            "-fx-font-size: 24px;"
-            + "-fx-font-weight: bold;"
-    );
+    bienvenida.getStyleClass().add("label-mensaje");
 
     HBox filaProductos =
             new HBox(25);
@@ -342,6 +375,7 @@ root.setTop(header);
         String codigo,
         String rutaImagen) {
         Button btnComprar = new Button("Comprar");
+        btnComprar.getStyleClass().add("btn-comprar");
 
 btnComprar.setOnAction(e -> {
     abrirFormularioVentas();
@@ -355,14 +389,7 @@ btnComprar.setOnAction(e -> {
 
     card.setPrefSize(180, 250);
 
-    card.setStyle(
-    "-fx-background-color:white;"
-    + "-fx-background-radius:20;"
-    + "-fx-border-radius:20;"
-    + "-fx-border-color:#e2e8f0;"
-    + "-fx-effect:dropshadow(gaussian,"
-    + "rgba(0,0,0,0.08),15,0,0,4);"
-);
+    card.getStyleClass().add("card");
 
     javafx.scene.image.ImageView imagen =
             new javafx.scene.image.ImageView(
@@ -462,22 +489,21 @@ private void mostrarProductos() {
             scroll
     );
 
+   panelPrincipal.setCenter(centro);
+
+if(usuarioActual.getRol().equals("ADMIN")){
+
     Button btnAdministrar =
             new Button(
                     "Administrar Productos"
             );
-btnAdministrar.setStyle(
-    "-fx-background-color:#4f46e5;"
-    + "-fx-text-fill:white;"
-    + "-fx-font-size:15px;"
-    + "-fx-font-weight:bold;"
-    + "-fx-background-radius:15;"
-    + "-fx-padding:12 20 12 20;"
-);
+   
+
+    btnAdministrar.getStyleClass().add("admin-btn");
     btnAdministrar.setPrefWidth(180);
 
-    panelPrincipal.setCenter(centro);
     panelPrincipal.setRight(btnAdministrar);
+}
 
     workspace.getChildren().add(
             panelPrincipal
@@ -499,9 +525,22 @@ public void mostrarSistema(Usuario usuario) {
 
     usuarioActual = usuario;
 
-    root.setLeft(menuLateral);
+    nombreUsuario.setText(
+        usuario.getRol().equalsIgnoreCase("ADMIN")
+        ? "Administrador"
+        : "Cliente"
+    );
 
+    root.setLeft(menuLateral);
     root.setCenter(workspace);
+
+    if (!usuario.getRol().equalsIgnoreCase("ADMIN")) {
+
+        btnClientes.setVisible(false);
+        btnProveedores.setVisible(false);
+        btnFinanzas.setVisible(false);
+
+    }
 
     mostrarInicio();
 }

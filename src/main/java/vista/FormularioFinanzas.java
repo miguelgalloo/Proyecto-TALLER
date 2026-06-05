@@ -15,7 +15,7 @@ public class FormularioFinanzas extends VBox {
     public FormularioFinanzas(StackPane parent) {
 
         this.getStylesheets().add(
-                getClass().getResource("style.css").toExternalForm()
+                getClass().getResource("/sistemagestionfx/style.css").toExternalForm()
         );
 
         this.setSpacing(15);

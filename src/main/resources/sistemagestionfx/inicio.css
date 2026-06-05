@@ -1,0 +1,261 @@
+
+.root{
+    -fx-background-color:#f8fafc;
+}
+
+/*WORKSPACE */
+
+.workspace{
+    -fx-background-color:#f8fafc;
+}
+
+/* MENU LATERAL*/
+.menu-lateral{
+    -fx-background-image:
+        url("/sistemagestionfx/images/fondomenu.png");
+     -fx-background-size: cover;
+
+    -fx-background-repeat: no-repeat;
+
+    -fx-background-position: center center;
+
+    -fx-background-color:
+        linear-gradient(to bottom,#0f172a,#1e293b);
+}
+.logo-menu{
+    -fx-text-fill:white;
+    -fx-font-size:22px;
+    -fx-font-weight:bold;
+}
+
+
+.subtitulo-menu{
+    -fx-text-fill: #dbeafe;
+    -fx-font-size: 14px;
+}
+.menu-btn{
+     -fx-background-color:
+    linear-gradient(
+        to right,
+        #1e3a8a,
+        #1e40af
+    );
+
+    -fx-text-fill:white;
+
+    -fx-font-weight:bold;
+
+    -fx-background-radius:12;
+
+    -fx-cursor:hand;
+    
+
+    -fx-font-size:18px;
+
+
+
+    -fx-padding:8 15 8 15;
+
+    -fx-alignment:CENTER_LEFT;
+
+    -fx-min-height:25px;
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(0,0,0,0.15),
+            10,
+            0.2,
+            0,
+            2
+        );
+}
+
+.menu-btn:hover{
+    -fx-background-color: linear-gradient(to right,#2563eb,#3b82f6);
+    -fx-cursor: hand;
+
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(37,99,235,0.6),
+            20,
+            0.3,
+            0,
+            0
+        );
+}
+
+.btn-menu-activo{
+    -fx-background-color: linear-gradient(to right,#16213e,#1f4068);
+    -fx-background-radius:18;
+
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(37,99,235,0.7),
+            20,
+            0.4,
+            0,
+            0
+        );
+}
+
+
+.btn-salir{
+
+     -fx-background-color:
+        linear-gradient(to right,#ff4b2b,#ff416c);
+
+    -fx-text-fill:white;
+
+    -fx-font-size:14px;
+
+    -fx-font-weight:bold;
+
+    -fx-background-radius:15;
+
+    -fx-padding:10 15 10 15;
+
+    -fx-min-height:40px;
+}
+
+.btn-salir:hover{
+    -fx-cursor: hand;
+    -fx-scale-x:1.03;
+    -fx-scale-y:1.03;
+}
+
+.header{
+    -fx-background-color:white;
+    -fx-border-color:#e5e7eb;
+    -fx-border-width:0 0 1 0;
+}
+.nombre-usuario{
+
+    -fx-font-size:17px;
+
+    -fx-font-weight:bold;
+
+    -fx-text-fill:#1e293b;
+}
+
+.icono-usuario{
+
+    -fx-font-size:22px;
+}
+
+
+.titulo-sistema{
+
+    -fx-text-fill:#1e293b;
+
+    -fx-font-size:26px;
+
+    -fx-font-weight:bold;
+}
+
+/*TITULO PRODUCTOS*/
+
+.label-mensaje{
+
+    -fx-font-size:26px;
+
+    -fx-font-weight:bold;
+
+    -fx-text-fill:#0f172a;
+}
+
+/* TARJETAS PRODUCTO*/
+
+.card{
+
+    -fx-background-color:white;
+
+    -fx-background-radius:20;
+
+    -fx-border-radius:20;
+
+    -fx-padding:15;
+
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(0,0,0,0.10),
+            20,
+            0.2,
+            0,
+            4
+        );
+}
+
+.card:hover{
+
+    -fx-scale-x:1.03;
+
+    -fx-scale-y:1.03;
+
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(59,130,246,0.25),
+            25,
+            0.2,
+            0,
+            6
+        );
+}
+
+/*BOTON COMPRAR*/
+.btn-comprar{
+
+    -fx-background-color:
+        linear-gradient(
+            to right,
+            #2563eb,
+            #3b82f6
+        );
+
+    -fx-text-fill:white;
+
+    -fx-font-weight:bold;
+
+    -fx-background-radius:12;
+
+    -fx-cursor:hand;
+}
+
+.btn-comprar:hover{
+
+    -fx-scale-x:1.05;
+
+    -fx-scale-y:1.05;
+}
+
+/*//admin*/
+
+.admin-btn{
+
+    -fx-background-color:
+        linear-gradient(
+            to right,
+            #4f46e5,
+            #6366f1
+        );
+
+    -fx-text-fill:white;
+
+    -fx-font-weight:bold;
+
+    -fx-background-radius:15;
+
+    -fx-padding:15 20 15 20;
+
+    -fx-cursor:hand;
+}
+
+.admin-btn:hover{
+
+    -fx-scale-x:1.05;
+
+    -fx-scale-y:1.05;
+}
