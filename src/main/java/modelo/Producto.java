@@ -1,4 +1,4 @@
-package sistemagestionfx;
+package modelo;
 
 public class Producto {
 

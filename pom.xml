@@ -26,7 +26,7 @@
         </maven.compiler.target>
 
         <exec.mainClass>
-            sistemagestionfx.MainApp
+            app.MainApp
         </exec.mainClass>
 
     </properties>
@@ -90,7 +90,7 @@
                 <configuration>
 
                     <mainClass>
-                        sistemagestionfx.MainApp
+                        app.MainApp
                     </mainClass>
 
                 </configuration>

@@ -1,4 +1,19 @@
-package sistemagestionfx;
+package app;
+
+
+
+import modelo.Usuario;
+import modelo.Producto;
+import vista.FormularioCliente;
+import vista.FormularioFinanzas;
+import vista.FormularioLogin;
+import vista.FormularioProductos;
+import vista.FormularioProveedor;
+import vista.FormularioRegistro;
+import vista.FormularioVentas;
+import dao.ProductoDAO;
+
+
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -16,20 +31,27 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
+    private BorderPane root;
 
     private StackPane workspace;
+
+    private VBox menuLateral;
+
+    private Usuario usuarioActual;
+
+    
 
     @Override
     public void start(Stage primaryStage) {
 
-        BorderPane root = new BorderPane();
+        root = new BorderPane();
 
         workspace = new StackPane();
         workspace.setStyle("-fx-background-color: #f4f4f4;");
 
         // ===== MENÚ LATERAL =====
 
-        VBox menuLateral = new VBox(15);
+        menuLateral = new VBox(15);
 
         menuLateral.setPadding(new Insets(20));
         menuLateral.setPrefWidth(220);
@@ -190,8 +212,8 @@ header.getChildren().add(tituloSistema);
 header.setAlignment(javafx.geometry.Pos.CENTER);
 
 root.setTop(header);
-        root.setLeft(menuLateral);
-        root.setCenter(workspace);
+        //root.setLeft(menuLateral);
+        //root.setCenter(workspace);
 
         Scene scene =
                 new Scene(root, 1200, 700);
@@ -219,7 +241,10 @@ root.setTop(header);
 
             alert.showAndWait();
         });
-mostrarInicio();
+        root.setCenter(
+    new FormularioLogin(this)
+);
+//mostrarInicio();
         primaryStage.show();
     }
 
@@ -258,7 +283,7 @@ mostrarInicio();
 
     Label bienvenida =
             new Label(
-                    "Bienvenido al Sistema"
+                    "Productos mas vendidos"
             );
 
     bienvenida.setStyle(
@@ -470,6 +495,16 @@ btnAdministrar.setStyle(
 
         workspace.getChildren().add(form);
     }
+public void mostrarSistema(Usuario usuario) {
+
+    usuarioActual = usuario;
+
+    root.setLeft(menuLateral);
+
+    root.setCenter(workspace);
+
+    mostrarInicio();
+}
 
     // ===== FINANZAS =====
 
