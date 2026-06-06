@@ -8,6 +8,8 @@ import modelo.Clientes;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 public class FormularioCliente extends VBox {
@@ -25,32 +27,59 @@ public class FormularioCliente extends VBox {
         this.setSpacing(15);
         this.setPadding(new Insets(30));
         this.setAlignment(Pos.CENTER);
-        this.setMaxSize(500, 400);
+        this.setPrefWidth(850);
+
+
+this.setMaxWidth(850);
+
+this.setPrefHeight(450);
+
+
+ImageView iconoTitulo = new ImageView(
+        new Image(
+                getClass()
+                .getResourceAsStream("/sistemagestionfx/images/icono1.png")
+        )
+);
+
+iconoTitulo.setFitWidth(40);
+iconoTitulo.setFitHeight(35);
 
         Label titulo = new Label("GESTIÓN DE CLIENTES");
+titulo.getStyleClass().add("titulo-formulario");
 
-        titulo.setStyle(
-                "-fx-font-size:20px; -fx-font-weight:bold;"
-        );
+HBox encabezado = new HBox(10);
+
+encabezado.setAlignment(Pos.CENTER);
+
+encabezado.getChildren().addAll(
+        iconoTitulo,
+        titulo
+);
+titulo.getStyleClass().add("titulo-formulario");
 
         GridPane grid = new GridPane();
 
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
+        Label lblDocumento = new Label("📄 Documento:");
+        lblDocumento.getStyleClass().add("label-form");
 
-        Label lblDocumento = new Label("Documento:");
+        Label lblNombre = new Label("👤 Nombre:");
+        lblNombre.getStyleClass().add("label-form");
+
+        Label lblTelefono = new Label("📞 Teléfono:");
+        lblTelefono.getStyleClass().add("label-form");
 
         TextField txtDocumento = new TextField();
 
-        Label lblNombre = new Label("Nombre:");
-
         TextField txtNombre = new TextField();
 
-        Label lblTelefono = new Label("Teléfono:");
-
         TextField txtTelefono = new TextField();
-
+        txtDocumento.getStyleClass().add("campo-texto");
+        txtNombre.getStyleClass().add("campo-texto");
+        txtTelefono.getStyleClass().add("campo-texto");
         grid.add(lblDocumento, 0, 0);
         grid.add(txtDocumento, 1, 0);
 
@@ -65,13 +94,14 @@ public class FormularioCliente extends VBox {
         Button btnActualizar = new Button("Actualizar");
         Button btnEliminar = new Button("Eliminar");
         Button btnLimpiar = new Button("Limpiar");
-        Button btnSalir = new Button("Salir");
 
-        btnGuardar.getStyleClass().add("btn-entrar");
-        btnActualizar.getStyleClass().add("btn-entrar");
+        btnGuardar.getStyleClass().add("btn-guardar");
+        btnActualizar.getStyleClass().add("btn-actualizar");
+        btnBuscar.getStyleClass().add("btn-secundario");
+        btnLimpiar.getStyleClass().add("btn-secundario");
 
-        btnEliminar.getStyleClass().add("btn-salir");
-        btnSalir.getStyleClass().add("btn-salir");
+        btnEliminar.getStyleClass().add("btn-eliminar");
+
 
         btnGuardar.setOnAction(e -> {
 
@@ -203,9 +233,7 @@ public class FormularioCliente extends VBox {
             txtTelefono.clear();
         });
 
-        btnSalir.setOnAction(
-                e -> parent.getChildren().remove(this)
-        );
+      
 
         HBox fila1 = new HBox(
                 10,
@@ -219,14 +247,13 @@ public class FormularioCliente extends VBox {
         HBox fila2 = new HBox(
                 10,
                 btnEliminar,
-                btnLimpiar,
-                btnSalir
+                btnLimpiar
         );
 
         fila2.setAlignment(Pos.CENTER);
 
         this.getChildren().addAll(
-                titulo,
+                encabezado,
                 grid,
                 fila1,
                 fila2

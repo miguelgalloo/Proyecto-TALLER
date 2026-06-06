@@ -1,95 +1,294 @@
-/* Fondo del formulario */
-.form-container {
+/* ===== CONTENEDOR DEL FORMULARIO ===== */
 
-    -fx-background-color: #fdfdfd;
+.form-container{
 
-    -fx-border-color: #34495e;
+    -fx-background-color: white;
 
+    -fx-background-radius: 25;
+
+    -fx-border-color: #8b9cb3;
     -fx-border-width: 2;
+    -fx-border-radius: 25;
 
-    -fx-background-radius: 15;
-
-    -fx-border-radius: 15;
+    -fx-padding: 35;
 
     -fx-effect: dropshadow(
         gaussian,
-        rgba(0,0,0,0.25),
-        12,
-        0.3,
+        rgba(0,0,0,0.20),
+        25,
+        0.2,
         0,
-        2
+        5
     );
 }
 
-/* Labels */
-.label {
 
-    -fx-font-family: "Arial";
+/* ===== TITULO ===== */
 
-    -fx-font-size: 13px;
+.titulo-formulario{
+
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+
+    -fx-text-fill: #15284d;
+}
+
+
+/* ===== LABELS ===== */
+
+.label-form{
+
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
 
     -fx-text-fill: #2c3e50;
 }
 
-/* Campos de texto */
-.text-field {
 
-    -fx-background-radius: 8;
+/* ===== CAMPOS ===== */
 
-    -fx-border-radius: 8;
+.campo-texto{
 
-    -fx-border-color: #95a5a6;
+    -fx-pref-width: 280px;
+    -fx-pref-height: 40px;
 
-    -fx-padding: 5;
+    -fx-background-color: white;
+
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+
+    -fx-border-color: #d0d7de;
+    -fx-border-width: 1.5;
+
+    -fx-font-size: 14px;
+
+    -fx-padding: 0 12 0 12;
 }
 
-.text-field:focused {
+.campo-texto:focused{
 
-    -fx-border-color: #2980b9;
+    -fx-border-color: #2563eb;
 
-    -fx-border-width: 2;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(37,99,235,0.25),
+        8,
+        0,
+        0,
+        0
+    );
 }
 
-/* Campo con error */
-.error-field {
 
-    -fx-border-color: #c0392b !important;
+/* ===== BOTON GUARDAR Y ACTUALIZAR ===== */
 
-    -fx-background-color: #fdecea;
+.btn-entrar{
+
+    -fx-background-color: linear-gradient(
+        to right,
+        #10b981,
+        #06d6a0
+    );
+
+    -fx-text-fill: white;
+
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 12;
+
+    -fx-pref-width: 120px;
+    -fx-pref-height: 40px;
+
+    -fx-cursor: hand;
 }
 
-/* Botones */
-.button {
+.btn-entrar:hover{
+
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+
+/* ===== ELIMINAR Y SALIR ===== */
+
+.btn-salir{
+
+    -fx-background-color: linear-gradient(
+        to right,
+        #ef4444,
+        #dc2626
+    );
+
+    -fx-text-fill: white;
+
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 12;
+
+    -fx-pref-width: 120px;
+    -fx-pref-height: 40px;
+
+    -fx-cursor: hand;
+}
+
+.btn-salir:hover{
+
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+
+/* ===== BOTONES NORMALES ===== */
+.btn-guardar{
+
+    -fx-background-color: #2563eb;
+
+    -fx-text-fill: white;
 
     -fx-font-weight: bold;
 
+    -fx-background-radius: 12;
+
+    -fx-pref-width: 130;
+    -fx-pref-height: 42;
+}
+
+.btn-guardar:hover{
+
+    -fx-background-color: #1d4ed8;
+}
+.btn-actualizar{
+
+    -fx-background-color: #E8F8E8;
+
+    -fx-border-color: #22C55E;
+    -fx-border-width: 2;
+
+    -fx-text-fill: #16A34A;
+
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+
+    -fx-pref-width: 130;
+    -fx-pref-height: 42;
+}
+
+.btn-actualizar:hover{
+
+    -fx-background-color: #b8f5b8;
+}
+.btn-eliminar{
+
+    -fx-background-color: #FFE5E5;
+
+    -fx-border-color: #DC2626;
+    -fx-border-width: 2;
+
+    -fx-text-fill: #DC2626;
+
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+
+    -fx-pref-width: 130;
+    -fx-pref-height: 42;
+}
+
+.btn-eliminar:hover{
+
+    -fx-background-color: #FFD6D6;
+
     -fx-cursor: hand;
+}
+.btn-secundario{
+
+    -fx-background-color: #F3F4F6;
+
+    -fx-border-color: #D1D5DB;
+    -fx-border-width: 1.5;
+
+    -fx-text-fill: #374151;
+
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+
+    -fx-pref-width: 130;
+    -fx-pref-height: 42;
+}
+
+.btn-secundario:hover{
+
+    -fx-background-color: #E5E7EB;
+
+    -fx-cursor: hand;
+}
+/* ===== REPORTE FINANZAS ===== */
+
+.card-finanzas{
+
+    -fx-background-color: white;
+
+    -fx-background-radius: 20;
+
+    -fx-border-color: #8b9cb3;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+
+    -fx-padding: 25;
+
+    -fx-min-width: 450;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0,0,0,0.15),
+        20,
+        0.2,
+        0,
+        4
+    );
+}
+
+.dato-finanza{
+
+    -fx-font-size: 18px;
+
+    -fx-font-weight: bold;
+
+    -fx-text-fill: #1f2937;
+
+    -fx-padding: 10;
+
+    -fx-background-color: #f8fafc;
 
     -fx-background-radius: 10;
+
+    -fx-border-color: #e5e7eb;
+
+    -fx-border-radius: 10;
 }
+.preview-producto{
+   
+    -fx-min-width: 140;
+    -fx-min-height: 140;
 
-/* Botón Entrar */
-.btn-entrar {
+    -fx-max-width: 140;
+    -fx-max-height: 140;
 
-    -fx-background-color: #16a085;
 
-    -fx-text-fill: white;
-}
+    -fx-background-color: #F8FAFC;
 
-.btn-entrar:hover {
+    -fx-border-color: #94A3B8;
+    -fx-border-width: 2;
 
-    -fx-background-color: #1abc9c;
-}
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
 
-/* Botón Salir */
-.btn-salir {
-
-    -fx-background-color: #922b21;
-
-    -fx-text-fill: white;
-}
-
-.btn-salir:hover {
-
-    -fx-background-color: #c0392b;
+    -fx-padding: 10;
 }

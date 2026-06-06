@@ -5,6 +5,7 @@ public class Usuario {
     private String usuario;
     private String clave;
     private String rol;
+    
 
     public Usuario() {
     }
@@ -12,11 +13,13 @@ public class Usuario {
     public Usuario(
             String usuario,
             String clave,
-            String rol) {
+            String rol
+            ) {
 
         this.usuario = usuario;
         this.clave = clave;
         this.rol = rol;
+        
     }
 
     public String getUsuario() {
@@ -42,4 +45,6 @@ public class Usuario {
     public void setRol(String rol) {
         this.rol = rol;
     }
+
+    
 }

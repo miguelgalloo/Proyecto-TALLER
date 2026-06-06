@@ -259,3 +259,12 @@
 
     -fx-scale-y:1.05;
 }
+.scroll-productos{
+
+    -fx-background-color: transparent;
+}
+
+.scroll-productos .viewport{
+
+    -fx-background-color: transparent;
+}

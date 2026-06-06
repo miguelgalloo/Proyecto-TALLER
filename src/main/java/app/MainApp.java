@@ -13,6 +13,7 @@ import vista.FormularioProveedor;
 import vista.FormularioRegistro;
 import vista.FormularioVentas;
 import dao.ProductoDAO;
+import java.io.File;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -391,15 +392,44 @@ btnComprar.setOnAction(e -> {
 
     card.getStyleClass().add("card");
 
-    javafx.scene.image.ImageView imagen =
-            new javafx.scene.image.ImageView(
-                    new javafx.scene.image.Image(
-                            getClass()
-                                    .getResourceAsStream(
-                                            rutaImagen
-                                    )
+  ImageView imagen = new ImageView();
+
+try {
+
+    if (rutaImagen.startsWith("/")) {
+
+        imagen.setImage(
+                new Image(
+                        getClass()
+                                .getResourceAsStream(
+                                        rutaImagen
+                                )
+                )
+        );
+
+    } else {
+
+        File archivo =
+                new File(rutaImagen);
+
+        if (archivo.exists()) {
+
+            imagen.setImage(
+                    new Image(
+                            archivo.toURI().toString()
                     )
             );
+        }
+    }
+
+} catch (Exception ex) {
+
+    System.out.println(
+            "No se pudo cargar: "
+            + rutaImagen
+    );
+
+}
 
     imagen.setFitWidth(100);
     imagen.setFitHeight(130);
@@ -432,32 +462,21 @@ private void mostrarProductos() {
 
     workspace.getChildren().clear();
 
-    BorderPane panelPrincipal =
-            new BorderPane();
+    BorderPane panelPrincipal = new BorderPane();
 
-    Label titulo =
-            new Label("PRODUCTOS");
+    panelPrincipal.setPadding(new Insets(20));
 
-    titulo.setStyle(
-            "-fx-font-size:24px;"
-            + "-fx-font-weight:bold;"
-    );
+    Label titulo = new Label("PRODUCTOS");
+    titulo.getStyleClass().add("titulo-formulario");
 
-    FlowPane panelProductos =
-            new FlowPane();
+    FlowPane panelProductos = new FlowPane();
 
     panelProductos.setHgap(25);
     panelProductos.setVgap(25);
-    panelProductos.setPadding(
-            new Insets(20)
-    );
+    panelProductos.setPadding(new Insets(20));
+    panelProductos.setAlignment(Pos.CENTER);
 
-    panelProductos.setAlignment(
-            javafx.geometry.Pos.CENTER
-    );
-
-    ProductoDAO dao =
-            new ProductoDAO();
+    ProductoDAO dao = new ProductoDAO();
 
     for (Producto p : dao.leerProductos()) {
 
@@ -472,38 +491,57 @@ private void mostrarProductos() {
         );
     }
 
-    ScrollPane scroll =
-            new ScrollPane(panelProductos);
+    ScrollPane scroll = new ScrollPane(panelProductos);
 
     scroll.setFitToWidth(true);
+    scroll.setFitToHeight(true);
 
-    VBox centro =
-            new VBox(20);
+    scroll.getStyleClass().add("scroll-productos");
 
-    centro.setAlignment(
-            javafx.geometry.Pos.TOP_CENTER
-    );
+    VBox centro = new VBox(20);
+
+    centro.setAlignment(Pos.TOP_CENTER);
 
     centro.getChildren().addAll(
             titulo,
             scroll
     );
 
-   panelPrincipal.setCenter(centro);
+    VBox.setVgrow(scroll, Priority.ALWAYS);
 
-if(usuarioActual.getRol().equals("ADMIN")){
+    panelPrincipal.setCenter(centro);
 
-    Button btnAdministrar =
-            new Button(
-                    "Administrar Productos"
-            );
-   
+    if (usuarioActual.getRol().equals("ADMIN")) {
 
-    btnAdministrar.getStyleClass().add("admin-btn");
-    btnAdministrar.setPrefWidth(180);
+        Button btnAdministrar =
+                new Button("Administrar");
 
-    panelPrincipal.setRight(btnAdministrar);
-}
+        btnAdministrar.getStyleClass()
+                .add("menu-btn");
+
+        btnAdministrar.setPrefWidth(180);
+
+        btnAdministrar.setOnAction(
+                e -> abrirFormularioProductos()
+        );
+
+        VBox panelDerecho = new VBox();
+
+        panelDerecho.setPadding(
+                new Insets(20)
+        );
+
+        panelDerecho.setAlignment(
+                Pos.TOP_CENTER
+        );
+
+        panelDerecho.getChildren()
+                .add(btnAdministrar);
+
+        panelPrincipal.setRight(
+                panelDerecho
+        );
+    }
 
     workspace.getChildren().add(
             panelPrincipal
@@ -520,6 +558,18 @@ if(usuarioActual.getRol().equals("ADMIN")){
                 new FormularioVentas(workspace);
 
         workspace.getChildren().add(form);
+    }
+    
+    private void abrirFormularioProductos() {
+
+        workspace.getChildren().clear();
+         FormularioProductos form =
+            new FormularioProductos(
+                    workspace,
+                    this::mostrarInicio
+            );
+          workspace.getChildren().add(form);
+
     }
 public void mostrarSistema(Usuario usuario) {
 

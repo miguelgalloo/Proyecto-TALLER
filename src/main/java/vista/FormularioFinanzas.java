@@ -25,15 +25,16 @@ public class FormularioFinanzas extends VBox {
         Label titulo =
                 new Label("REPORTE FINANCIERO");
 
-        titulo.setStyle(
-                "-fx-font-size:20px;-fx-font-weight:bold;"
-        );
+        titulo.getStyleClass().add("titulo-formulario");
 
         Label lblTotal = new Label();
 
         Label lblCantidad = new Label();
 
         Label lblPromedio = new Label();
+        lblTotal.getStyleClass().add("dato-finanza");
+        lblCantidad.getStyleClass().add("dato-finanza");
+        lblPromedio.getStyleClass().add("dato-finanza");
 
         FinanzasDAO dao = new FinanzasDAO();
 
@@ -56,6 +57,15 @@ public class FormularioFinanzas extends VBox {
         };
 
         actualizar.run();
+        VBox tarjeta = new VBox(15);
+
+        tarjeta.getStyleClass().add("card-finanzas");
+
+        tarjeta.getChildren().addAll(
+                lblTotal,
+                lblCantidad,
+                lblPromedio
+        );
 
         Button btnActualizar =
                 new Button("Actualizar");
@@ -71,19 +81,16 @@ public class FormularioFinanzas extends VBox {
                 e -> parent.getChildren().remove(this)
         );
 
-        HBox botones =
-                new HBox(10,
+        HBox botones
+                = new HBox(10,
                         btnActualizar,
                         btnSalir);
 
         botones.setAlignment(Pos.CENTER);
 
         this.getChildren().addAll(
-                titulo,
-                lblTotal,
-                lblCantidad,
-                lblPromedio,
-                botones
-        );
-    }
-}
+        titulo,
+        tarjeta,
+        botones
+);
+    }}

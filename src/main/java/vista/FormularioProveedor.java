@@ -1,13 +1,13 @@
 package vista;
 
-
 import dao.ProveedorDAO;
 import modelo.Proveedor;
-
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 public class FormularioProveedor extends VBox {
@@ -25,13 +25,33 @@ public class FormularioProveedor extends VBox {
         this.setSpacing(15);
         this.setPadding(new Insets(30));
         this.setAlignment(Pos.CENTER);
-        this.setMaxSize(500, 400);
+        this.setMaxWidth(850);
 
-        Label titulo = new Label("GESTIÓN DE PROVEEDORES");
+this.setPrefHeight(450);
 
-        titulo.setStyle(
-                "-fx-font-size:20px; -fx-font-weight:bold;"
-        );
+
+ImageView iconoTitulo = new ImageView(
+        new Image(
+                getClass()
+                .getResourceAsStream("/sistemagestionfx/images/icono1.png")
+        )
+);
+
+iconoTitulo.setFitWidth(40);
+iconoTitulo.setFitHeight(35);
+
+        Label titulo = new Label("GESTIÓN DE PROVEDORES");
+titulo.getStyleClass().add("titulo-formulario");
+
+HBox encabezado = new HBox(10);
+
+encabezado.setAlignment(Pos.CENTER);
+
+encabezado.getChildren().addAll(
+        iconoTitulo,
+        titulo
+);
+
 
         GridPane grid = new GridPane();
 
@@ -40,16 +60,22 @@ public class FormularioProveedor extends VBox {
         grid.setAlignment(Pos.CENTER);
 
         Label lblNit = new Label("NIT:");
+        lblNit.getStyleClass().add("label-form");
 
         TextField txtNit = new TextField();
 
         Label lblEmpresa = new Label("Empresa:");
+        lblEmpresa.getStyleClass().add("label-form");
 
         TextField txtEmpresa = new TextField();
 
         Label lblTelefono = new Label("Teléfono:");
+        lblTelefono.getStyleClass().add("label-form");
 
         TextField txtTelefono = new TextField();
+        txtEmpresa.getStyleClass().add("campo-texto");
+        txtNit.getStyleClass().add("campo-texto");
+        txtTelefono.getStyleClass().add("campo-texto");
 
         grid.add(lblNit, 0, 0);
         grid.add(txtNit, 1, 0);
@@ -65,13 +91,13 @@ public class FormularioProveedor extends VBox {
         Button btnActualizar = new Button("Actualizar");
         Button btnEliminar = new Button("Eliminar");
         Button btnLimpiar = new Button("Limpiar");
-        Button btnSalir = new Button("Salir");
 
-        btnGuardar.getStyleClass().add("btn-entrar");
-        btnActualizar.getStyleClass().add("btn-entrar");
+        btnGuardar.getStyleClass().add("btn-guardar");
+        btnActualizar.getStyleClass().add("btn-actualizar");
+        btnBuscar.getStyleClass().add("btn-secundario");
+        btnLimpiar.getStyleClass().add("btn-secundario");
 
-        btnEliminar.getStyleClass().add("btn-salir");
-        btnSalir.getStyleClass().add("btn-salir");
+        btnEliminar.getStyleClass().add("btn-eliminar");
 
         btnGuardar.setOnAction(e -> {
 
@@ -86,8 +112,8 @@ public class FormularioProveedor extends VBox {
                 return;
             }
 
-            Proveedor existente =
-                    dao.buscarProveedor(
+            Proveedor existente
+                    = dao.buscarProveedor(
                             txtNit.getText()
                     );
 
@@ -100,8 +126,8 @@ public class FormularioProveedor extends VBox {
                 return;
             }
 
-            Proveedor proveedor =
-                    new Proveedor(
+            Proveedor proveedor
+                    = new Proveedor(
                             txtNit.getText(),
                             txtEmpresa.getText(),
                             txtTelefono.getText()
@@ -120,8 +146,8 @@ public class FormularioProveedor extends VBox {
 
         btnBuscar.setOnAction(e -> {
 
-            Proveedor proveedor =
-                    dao.buscarProveedor(
+            Proveedor proveedor
+                    = dao.buscarProveedor(
                             txtNit.getText()
                     );
 
@@ -145,8 +171,8 @@ public class FormularioProveedor extends VBox {
 
         btnActualizar.setOnAction(e -> {
 
-            Proveedor proveedor =
-                    new Proveedor(
+            Proveedor proveedor
+                    = new Proveedor(
                             txtNit.getText(),
                             txtEmpresa.getText(),
                             txtTelefono.getText()
@@ -168,39 +194,39 @@ public class FormularioProveedor extends VBox {
 
         btnEliminar.setOnAction(e -> {
 
-    Alert confirmacion =
-            new Alert(Alert.AlertType.CONFIRMATION);
+            Alert confirmacion
+                    = new Alert(Alert.AlertType.CONFIRMATION);
 
-    confirmacion.setTitle("Confirmar eliminación");
+            confirmacion.setTitle("Confirmar eliminación");
 
-    confirmacion.setHeaderText(null);
+            confirmacion.setHeaderText(null);
 
-    confirmacion.setContentText(
-            "¿Está seguro de eliminar este proveedor?"
-    );
-
-    if (confirmacion.showAndWait().get()
-            == ButtonType.OK) {
-
-        if (dao.eliminarProveedor(
-                txtNit.getText())) {
-
-            mostrarMensaje(
-                    "Proveedor eliminado"
+            confirmacion.setContentText(
+                    "¿Está seguro de eliminar este proveedor?"
             );
 
-            txtNit.clear();
-            txtEmpresa.clear();
-            txtTelefono.clear();
+            if (confirmacion.showAndWait().get()
+                    == ButtonType.OK) {
 
-        } else {
+                if (dao.eliminarProveedor(
+                        txtNit.getText())) {
 
-            mostrarMensaje(
-                    "Proveedor no encontrado"
-            );
-        }
-    }
-});
+                    mostrarMensaje(
+                            "Proveedor eliminado"
+                    );
+
+                    txtNit.clear();
+                    txtEmpresa.clear();
+                    txtTelefono.clear();
+
+                } else {
+
+                    mostrarMensaje(
+                            "Proveedor no encontrado"
+                    );
+                }
+            }
+        });
 
         btnLimpiar.setOnAction(e -> {
 
@@ -209,9 +235,7 @@ public class FormularioProveedor extends VBox {
             txtTelefono.clear();
         });
 
-        btnSalir.setOnAction(
-                e -> parent.getChildren().remove(this)
-        );
+        
 
         HBox fila1 = new HBox(
                 10,
@@ -225,14 +249,13 @@ public class FormularioProveedor extends VBox {
         HBox fila2 = new HBox(
                 10,
                 btnEliminar,
-                btnLimpiar,
-                btnSalir
+                btnLimpiar
         );
 
         fila2.setAlignment(Pos.CENTER);
 
         this.getChildren().addAll(
-                titulo,
+                encabezado,
                 grid,
                 fila1,
                 fila2
@@ -241,8 +264,8 @@ public class FormularioProveedor extends VBox {
 
     private void mostrarMensaje(String mensaje) {
 
-        Alert alert =
-                new Alert(Alert.AlertType.INFORMATION);
+        Alert alert
+                = new Alert(Alert.AlertType.INFORMATION);
 
         alert.setHeaderText(null);
 

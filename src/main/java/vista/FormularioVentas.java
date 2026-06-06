@@ -9,6 +9,7 @@ import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 
 public class FormularioVentas extends VBox {
@@ -51,6 +52,33 @@ public class FormularioVentas extends VBox {
         Label lblValor = new Label("Valor:");
 
         TextField txtValor = new TextField();
+        TableView<Venta> tablaVentas =
+        new TableView<>();
+        TableColumn<Venta, String> colCodigo =
+        new TableColumn<>("Código");
+
+colCodigo.setCellValueFactory(
+        new PropertyValueFactory<>("codigo")
+);
+
+TableColumn<Venta, String> colProducto =
+        new TableColumn<>("Producto");
+
+colProducto.setCellValueFactory(
+        new PropertyValueFactory<>("producto")
+);
+
+TableColumn<Venta, Double> colValor =
+        new TableColumn<>("Valor");
+
+colValor.setCellValueFactory(
+        new PropertyValueFactory<>("valor")
+);
+tablaVentas.getColumns().addAll(
+        colCodigo,
+        colProducto,
+        colValor
+);
 
         grid.add(lblCodigo, 0, 0);
         grid.add(txtCodigo, 1, 0);
@@ -116,6 +144,9 @@ public class FormularioVentas extends VBox {
                                 txtProducto.getText(),
                                 valor
                         );
+                tablaVentas.getItems().add(
+        venta
+);
 
                 dao.agregarVenta(venta);
 

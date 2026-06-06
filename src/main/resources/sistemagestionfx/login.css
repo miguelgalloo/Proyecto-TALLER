@@ -132,15 +132,12 @@
     -fx-background-position: center center;
 }
 .panel-izquierdo{
-
-    -fx-pref-width:450;
-
     -fx-padding:60;
-
     -fx-alignment:center-left;
-
     -fx-spacing:25;
 }
+
+
 .titulo-login{
 
     -fx-text-fill:white;
@@ -161,6 +158,7 @@
 
     -fx-pref-width:750;
 }
+
 .login-card{
 
     -fx-background-color:white;

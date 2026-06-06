@@ -18,23 +18,23 @@ public class FormularioRegistro extends VBox {
                         .toExternalForm()
         );
 
-        setAlignment(Pos.CENTER);
+         setAlignment(Pos.CENTER);
 
-        HBox root = new HBox();
+    HBox root = new HBox();
 
-        root.getStyleClass().add("login-root");
+    root.getStyleClass().add("login-root");
 
-        root.setPrefSize(1200, 700);
+    root.setPrefSize(1200, 700);
 
-        // ======================
-        // PANEL IZQUIERDO
-        // ======================
+    // ======================
+    // PANEL IZQUIERDO
+    // ======================
 
-        VBox panelIzquierdo = new VBox(20);
+    VBox panelIzquierdo = new VBox(20);
 
-        panelIzquierdo.getStyleClass().add(
-                "panel-izquierdo"
-        );
+    panelIzquierdo.getStyleClass().add(
+            "panel-izquierdo"
+    );
 
         Label tituloGrande =
                 new Label("LICORERÍA");

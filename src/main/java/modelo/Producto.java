@@ -6,6 +6,8 @@ public class Producto {
     private String nombre;
     private double precio;
     private String imagen;
+    private int stock;
+    
 
     public Producto() {
     }
@@ -14,12 +16,22 @@ public class Producto {
             String codigo,
             String nombre,
             double precio,
-            String imagen) {
+            String imagen,
+            int stock) {
 
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;
         this.imagen = imagen;
+        this.stock = stock;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public String getCodigo() {
