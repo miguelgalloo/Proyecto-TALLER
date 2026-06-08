@@ -11,6 +11,7 @@ import vista.FormularioLogin;
 import vista.FormularioProductos;
 import vista.FormularioProveedor;
 import vista.FormularioRegistro;
+import vista.FormularioFactura;
 import vista.FormularioVentas;
 import dao.ProductoDAO;
 import java.io.File;
@@ -32,8 +33,18 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.util.ArrayList;
+import java.util.List;
+import modelo.DetalleFactura;
 
 public class MainApp extends Application {
+    
+    
+    public static MainApp instancia;
+
+     public static List<DetalleFactura> carrito =
+        new ArrayList<>();
+     
     private BorderPane root;
 
     private StackPane workspace;
@@ -49,12 +60,18 @@ public class MainApp extends Application {
     private Button btnVentas;
     private Button btnFinanzas;
     private Button btnSalir;
+    public static String codigoSeleccionado;
+    public static String productoSeleccionado;
+    public static double precioSeleccionado;
+   
 
+    public Usuario getUsuarioActual() {
+    return usuarioActual;
+}
     
-
     @Override
     public void start(Stage primaryStage) {
-
+        instancia = this;
         root = new BorderPane();
 
         workspace = new StackPane();
@@ -116,7 +133,7 @@ VBox encabezadoMenu = new VBox(
                 new Button("💰 Finanzas");
 
         btnSalir =
-                new Button("⏻ Salir");
+                new Button("✖︎ Salir");
 
         // Tamaño botones
         
@@ -175,9 +192,40 @@ btnInicio.setOnAction(
                 e -> abrirFormularioProveedor()
         );
 
-        btnVentas.setOnAction(
-                e -> abrirFormularioVentas()
+        btnVentas.setOnAction(e -> {
+
+    if (usuarioActual.getRol()
+            .equalsIgnoreCase("CLIENTE")) {
+
+        if (MainApp.carrito.isEmpty()) {
+
+            Alert alert =
+                    new Alert(
+                            Alert.AlertType.INFORMATION
+                    );
+
+            alert.setHeaderText(null);
+
+            alert.setContentText(
+                    "No hay productos en la factura."
+            );
+
+            alert.showAndWait();
+
+            return;
+        }
+
+        workspace.getChildren().clear();
+
+        workspace.getChildren().add(
+                new FormularioFactura(workspace)
         );
+
+    } else {
+
+        abrirFormularioVentas();
+    }
+});
 
         btnFinanzas.setOnAction(
                 e -> abrirFormularioFinanzas()
@@ -332,36 +380,21 @@ root.setTop(header);
             javafx.geometry.Pos.CENTER
     );
 
-    filaProductos.getChildren().addAll(
+    ProductoDAO dao = new ProductoDAO();
+
+for (Producto p : dao.leerProductos()) {
+
+    filaProductos.getChildren().add(
 
             crearCardProducto(
-                    "Aguila",
-                    "$4.000",
-                    "00023",
-                    "/sistemagestionfx/images/aguila.png"
-            ),
-
-            crearCardProducto(
-                    "Vino",
-                    "$35.000",
-                    "00549",
-                    "/sistemagestionfx/images/vino.png"
-            ),
-
-            crearCardProducto(
-                    "Old Parr",
-                    "$120.000",
-                    "00590",
-                    "/sistemagestionfx/images/oldparr.png"
-            ),
-
-            crearCardProducto(
-                    "Ron Medellín",
-                    "$80.000",
-                    "00567",
-                    "/sistemagestionfx/images/ron.png"
-            )
+                    p.getNombre(),
+                    String.valueOf(p.getPrecio()),
+                    p.getCodigo(),
+                    p.getImagen(),
+                    p.getStock()
+)
     );
+}
 
     contenedor.getChildren().addAll(
             bienvenida,
@@ -374,11 +407,22 @@ root.setTop(header);
         String nombre,
         String precio,
         String codigo,
-        String rutaImagen) {
+        String rutaImagen,
+        int stock) {
         Button btnComprar = new Button("Comprar");
         btnComprar.getStyleClass().add("btn-comprar");
 
 btnComprar.setOnAction(e -> {
+
+    MainApp.codigoSeleccionado = codigo;
+
+    MainApp.productoSeleccionado = nombre;
+
+    MainApp.precioSeleccionado =
+        Double.parseDouble(
+                precio.replace("$", "")
+        );
+
     abrirFormularioVentas();
 });
 
@@ -447,18 +491,26 @@ try {
 
     Label lblPrecio =
             new Label(precio);
+    
+    Label lblStock =
+        new Label(
+                "Stock: " + stock
+        );
 
-    card.getChildren().addAll(
-            imagen,
-            lblNombre,
-            lblCodigo,
-            lblPrecio,
-            btnComprar
-    );
+card.getChildren().addAll(
+        imagen,
+        lblNombre,
+        lblCodigo,
+        lblPrecio,
+        lblStock,
+        btnComprar
+);
+    
+    
 
     return card;
 }
-private void mostrarProductos() {
+public void mostrarProductos() {
 
     workspace.getChildren().clear();
 
@@ -486,8 +538,9 @@ private void mostrarProductos() {
                         p.getNombre(),
                         "$" + p.getPrecio(),
                         p.getCodigo(),
-                        p.getImagen()
-                )
+                        p.getImagen(),
+                        p.getStock()
+)
         );
     }
 
@@ -586,11 +639,18 @@ public void mostrarSistema(Usuario usuario) {
 
     if (!usuario.getRol().equalsIgnoreCase("ADMIN")) {
 
-        btnClientes.setVisible(false);
-        btnProveedores.setVisible(false);
-        btnFinanzas.setVisible(false);
+    btnClientes.setVisible(false);
+    btnClientes.setManaged(false);
 
-    }
+    btnProveedores.setVisible(false);
+    btnProveedores.setManaged(false);
+
+    btnFinanzas.setVisible(false);
+    btnFinanzas.setManaged(false);
+
+    btnVentas.setText("☑ Facturas");
+
+}
 
     mostrarInicio();
 }

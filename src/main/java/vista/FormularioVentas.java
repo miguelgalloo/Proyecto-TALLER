@@ -3,6 +3,11 @@ package vista;
 
 import dao.VentaDAO;
 import modelo.Venta;
+import modelo.DetalleFactura;
+import app.MainApp;
+import modelo.Producto;
+import dao.ProductoDAO;
+import vista.FormularioFactura;
 
 
 import java.util.List;
@@ -11,6 +16,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
+import javafx.scene.control.*;
+
+
 
 public class FormularioVentas extends VBox {
 
@@ -52,11 +60,41 @@ public class FormularioVentas extends VBox {
         Label lblValor = new Label("Valor:");
 
         TextField txtValor = new TextField();
+        
+        Label lblCantidad
+                = new Label("Cantidad:");
+
+        TextField txtCantidad
+                = new TextField();
+
         TableView<Venta> tablaVentas =
         new TableView<>();
         TableColumn<Venta, String> colCodigo =
         new TableColumn<>("Código");
 
+        if (MainApp.codigoSeleccionado != null) {
+
+    txtCodigo.setText(
+            MainApp.codigoSeleccionado
+    );
+
+    txtProducto.setText(
+            MainApp.productoSeleccionado
+    );
+
+    txtValor.setText(
+            String.valueOf(
+                    MainApp.precioSeleccionado
+            )
+    );
+
+    txtCodigo.setEditable(false);
+
+    txtProducto.setEditable(false);
+
+    txtValor.setEditable(false);
+}
+        
 colCodigo.setCellValueFactory(
         new PropertyValueFactory<>("codigo")
 );
@@ -88,8 +126,12 @@ tablaVentas.getColumns().addAll(
 
         grid.add(lblValor, 0, 2);
         grid.add(txtValor, 1, 2);
+        
+        grid.add(lblCantidad, 0, 3);
+        grid.add(txtCantidad, 1, 3);
 
         Button btnGuardar = new Button("Guardar");
+        Button btnFactura = new Button("Agregar Factura");
         Button btnMostrar = new Button("Mostrar Ventas");
         Button btnBuscar = new Button("Buscar");
         Button btnActualizar = new Button("Actualizar");
@@ -97,12 +139,14 @@ tablaVentas.getColumns().addAll(
         Button btnLimpiar = new Button("Limpiar");
         Button btnSalir = new Button("Salir");
 
-        btnGuardar.getStyleClass().add("btn-entrar");
-        btnMostrar.getStyleClass().add("btn-entrar");
-        btnActualizar.getStyleClass().add("btn-entrar");
-
-        btnEliminar.getStyleClass().add("btn-salir");
-        btnSalir.getStyleClass().add("btn-salir");
+        btnGuardar.getStyleClass().add("btn-guardar");
+        btnFactura.getStyleClass().add("btn-secundario");
+        btnMostrar.getStyleClass().add("btn-secundario");
+        btnBuscar.getStyleClass().add("btn-secundario");
+        btnActualizar.getStyleClass().add("btn-actualizar");
+        btnEliminar.getStyleClass().add("btn-eliminar");
+        btnLimpiar.getStyleClass().add("btn-secundario");
+        btnSalir.getStyleClass().add("btn-eliminar");
 
         btnGuardar.setOnAction(e -> {
 
@@ -165,6 +209,70 @@ tablaVentas.getColumns().addAll(
                 );
             }
         });
+        
+        btnFactura.setOnAction(e -> {
+
+    try {
+
+        ProductoDAO productoDAO =
+                new ProductoDAO();
+
+        Producto producto =
+                productoDAO.buscarProducto(
+                        txtCodigo.getText()
+                );
+
+        int cantidad =
+                Integer.parseInt(
+                        txtCantidad.getText()
+                );
+
+        if (producto == null) {
+
+            mostrarMensaje(
+                    "Producto no encontrado"
+            );
+
+            return;
+        }
+
+        if (cantidad > producto.getStock()) {
+
+            mostrarMensaje(
+                    "Solo hay "
+                    + producto.getStock()
+                    + " unidades disponibles"
+            );
+
+            return;
+        }
+
+        DetalleFactura item =
+                new DetalleFactura(
+                        txtCodigo.getText(),
+                        txtProducto.getText(),
+                        Double.parseDouble(
+                                txtValor.getText()
+                        ),
+                        cantidad
+                );
+
+        MainApp.carrito.add(item);
+
+        parent.getChildren().clear();
+
+        parent.getChildren().add(
+                new FormularioFactura(parent)
+        );
+
+    } catch (Exception ex) {
+
+        mostrarMensaje(
+                "Verifique los datos"
+        );
+    }
+});
+
         btnMostrar.setOnAction(e -> {
 
     List<Venta> ventas = dao.leerVentas();
@@ -303,22 +411,49 @@ tablaVentas.getColumns().addAll(
                 e -> parent.getChildren().remove(this)
         );
 
-        HBox fila1 = new HBox(
-                10,
-                btnGuardar,
-                btnMostrar,
-                btnBuscar,
-                btnActualizar
-        );
+        HBox fila1;
+
+        if (MainApp.instancia.getUsuarioActual()
+                .getRol().equalsIgnoreCase("CLIENTE")) {
+
+            fila1 = new HBox(
+                    10,
+                    btnFactura
+            );
+
+} else {
+
+    fila1 = new HBox(
+            10,
+            btnGuardar,
+            btnFactura,
+            btnMostrar
+    );
+}
 
         fila1.setAlignment(Pos.CENTER);
 
-        HBox fila2 = new HBox(
-                10,
-                btnEliminar,
-                btnLimpiar,
-                btnSalir
-        );
+        HBox fila2;
+
+if (MainApp.instancia.getUsuarioActual()
+        .getRol().equalsIgnoreCase("CLIENTE")) {
+
+    fila2 = new HBox(
+            10,
+            btnSalir
+    );
+
+} else {
+
+    fila2 = new HBox(
+            10,
+            btnBuscar,
+            btnActualizar,
+            btnEliminar,
+            btnLimpiar,
+            btnSalir
+    );
+}
 
         fila2.setAlignment(Pos.CENTER);
 

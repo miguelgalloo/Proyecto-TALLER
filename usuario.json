@@ -13,5 +13,15 @@
     "usuario": "mariana",
     "clave": "1234",
     "rol": "ADMIN"
+  },
+  {
+    "usuario": "123",
+    "clave": "123",
+    "rol": "CLIENTE"
+  },
+  {
+    "usuario": "c",
+    "clave": "123",
+    "rol": "CLIENTE"
   }
 ]
