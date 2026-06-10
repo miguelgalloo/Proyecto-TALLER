@@ -44,7 +44,7 @@ public class MainApp extends Application {
 
      public static List<DetalleFactura> carrito =
         new ArrayList<>();
-     
+     private HBox header;
     private BorderPane root;
 
     private StackPane workspace;
@@ -133,7 +133,7 @@ VBox encabezadoMenu = new VBox(
                 new Button("💰 Finanzas");
 
         btnSalir =
-                new Button("✖︎ Salir");
+                new Button("⏻ Salir");
 
         // Tamaño botones
         
@@ -234,13 +234,18 @@ btnInicio.setOnAction(
         e -> mostrarProductos()
 );
 
-        btnSalir.setOnAction(
-                e -> System.exit(0)
-        );
+       btnSalir.setOnAction(e -> {
+
+    root.setLeft(null);
+    root.setTop(null);
+    root.setCenter(
+            new FormularioLogin(this)
+    );
+});
 
 //        // ===== LAYOUT =====
 
-HBox header = new HBox();
+header = new HBox();
 
 header.setPadding(new Insets(15,25,15,25));
 
@@ -326,6 +331,7 @@ root.setTop(header);
 
             alert.showAndWait();
         });
+        root.setTop(null);
         root.setCenter(
     new FormularioLogin(this)
 );
@@ -627,6 +633,7 @@ public void mostrarProductos() {
 public void mostrarSistema(Usuario usuario) {
 
     usuarioActual = usuario;
+    root.setTop(header);
 
     nombreUsuario.setText(
         usuario.getRol().equalsIgnoreCase("ADMIN")
