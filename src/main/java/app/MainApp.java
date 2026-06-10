@@ -237,6 +237,7 @@ btnInicio.setOnAction(
        btnSalir.setOnAction(e -> {
 
     root.setLeft(null);
+    carrito.clear();
     root.setTop(null);
     root.setCenter(
             new FormularioLogin(this)
@@ -516,6 +517,18 @@ card.getChildren().addAll(
 
     return card;
 }
+    private void resetMenu() {
+    btnClientes.setVisible(true);
+    btnClientes.setManaged(true);
+
+    btnProveedores.setVisible(true);
+    btnProveedores.setManaged(true);
+
+    btnFinanzas.setVisible(true);
+    btnFinanzas.setManaged(true);
+
+    btnVentas.setText("🛒 Ventas");
+}
 public void mostrarProductos() {
 
     workspace.getChildren().clear();
@@ -633,6 +646,7 @@ public void mostrarProductos() {
 public void mostrarSistema(Usuario usuario) {
 
     usuarioActual = usuario;
+    resetMenu();
     root.setTop(header);
 
     nombreUsuario.setText(
